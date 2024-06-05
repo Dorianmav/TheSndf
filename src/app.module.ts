@@ -10,6 +10,7 @@ import { BullModule } from '@nestjs/bull';
 import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
+import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [
@@ -33,6 +34,8 @@ import { GraphQLModule } from '@nestjs/graphql';
     AppController],
   providers: [
     UtilisateurService,
-    AppService],
+    AppService,
+  PrismaService,
+],
 })
 export class AppModule { }

@@ -2,32 +2,28 @@
 https://docs.nestjs.com/controllers#controllers
 */
 
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UtilisateurService } from './utilisateur.service';
+import { Utilisateur as UtilisateurModel, } from '@prisma/client';
 
 @Controller('utilisateur')
-export class UtilisateurController { 
+export class UtilisateurController {
     constructor(private readonly utilisateurService: UtilisateurService) {
     }
 
-    @Get()
-    getAllUtilisateurs() {
-        return "ok";
-    }
-
     @Get(':id')
-    getUtilisateur() {
-        return "ok";
+    async getUserById(@Param('id') id: string): Promise<UtilisateurModel> {
+        return this.utilisateurService.utilisateur({ id: Number(id) });
     }
 
-    @Get('email/:email')
-    getUtilisateurByEmail() {
-        return "ok";
-    }
+    
 
     @Post()
-    createUtilisateur() {
-        return "ok";
+    async signupUser(
+        @Body() userData: { email: string, password: string, username: string },
+    ): Promise<UtilisateurModel> {
+        return this.utilisateurService.createUtilisateur(userData);
     }
+
 
 }
